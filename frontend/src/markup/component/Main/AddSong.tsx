@@ -35,34 +35,47 @@ const Button = styled.button`
   border-radius: 4px;
   cursor: pointer;
 `;
-
-const AddSongForm: React.FC<{ onAddSong: (song: any) => void }> = ({ onAddSong }) => {
+const AddSongForm: React.FC<{  onAddSong: () => void }> = ({ onAddSong }) => {
   const [title, setTitle] = useState('');
   const [album, setAlbum] = useState('');
   const [genre, setGenre] = useState('');
   const [artist, setArtist] = useState('');
   const [error, setError] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit =  (e: React.FormEvent) => {
     e.preventDefault();
     if (!title || !album || !genre || !artist) {
       setError('All fields are required');
       return;
     }
     setError('');
-    const newSong = { title, album, genre, artist };
-    const formData = {
-        title,
-        album,
-        genre,
-        artist,
-        };
-        const response  = Create(formData)
-    onAddSong(newSong);
-    // setTitle('');
-    // setAlbum('');
-    // setGenre('');
-    // setArtist('');
+    // const newSong = { title, album, genre, artist };
+    const formData = {title,album,genre,artist};
+         // Pass the form data to the service
+    const res = Create( formData );
+    res
+      .then((response) => response.json())
+      .then((data) => {
+      console.log("see data")
+         console.log(data);
+        // If Error is returned from the API server, set the error message
+        if (data.error) {
+            setError('Failed to add song. Please try again.');
+        } else {
+            onAddSong();
+            setTitle('');
+            setAlbum('');
+            setGenre('');
+            setArtist('');
+        } 
+      })
+      // Handle Catch
+      .catch( ( error ) =>
+      {
+        console.log( "See the error below" )
+        setError('Failed to add song. Please try again.');
+        console.log(error)
+      });
   };
 
   return (
