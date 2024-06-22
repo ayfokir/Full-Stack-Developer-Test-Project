@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import Create from "../../../services/create-song-service";
 import formDataType from "../../../utils/FormType";
 import Edit from "../../../services/edit-song-service";
 import getSongs from "../../../services/get-songs.service";
+import { updateSongStart } from "../../redux/slices/Slice";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store/Store";
 const FormContainer = styled.div`
   background-color: #fff;
   padding: 20px;
@@ -38,55 +42,40 @@ const Button = styled.button`
   border-radius: 4px;
   cursor: pointer;
 `;
-const EditSong: React.FC<{
-  updateSong: Partial<formDataType>;
-  onAddSong: () => void;
-}> = ({ onAddSong, updateSong }) => {
-  console.log("see selected song to be edited");
-  console.log(updateSong);
-  const [title, setTitle] = useState(updateSong?.title);
-  const [album, setAlbum] = useState(updateSong?.album);
-  const [genre, setGenre] = useState(updateSong?.genre);
-  const [artist, setArtist] = useState(updateSong?.artist);
+const EditSong: React.FC<{onAddSong: () => void;}> = ({ onAddSong }) => {
+  const dispatch = useDispatch();
+  const selectedSong = useSelector((state: RootState) => state.selectedSong.selectedSong);
+
+  const [title, setTitle] = useState("");
+  const [album, setAlbum] = useState("");
+  const [genre, setGenre] = useState("");
+  const [artist, setArtist] = useState("");
+  const [_id, setId]   = useState("");
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (selectedSong) {
+      setTitle(selectedSong.title);
+      setAlbum(selectedSong.album);
+      setGenre(selectedSong.genre);
+      setArtist(selectedSong.artist);
+      setId(selectedSong._id || "");
+    }
+  }, [selectedSong]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!title || !album || !genre || !artist) {
-      setError("All fields are required");
+      setError('All fields are required');
       return;
     }
-    setError("");
-    // const newSong = { title, album, genre, artist };
-    const formData = { title, album, genre, artist, _id: updateSong._id };
-    // Pass the form data to the service
-    console.log("see updated song");
-    console.log(updateSong);
-    const res = Edit(formData);
-    res
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("see data");
-        console.log(data);
-        // If Error is returned from the API server, set the error message
-        if (data.error) {
-          setError("Failed to add song. Please try again.");
-        } else {
-          onAddSong();
-          setTitle("");
-          setAlbum("");
-          setGenre("");
-          setArtist("");
-        }
-      })
-      // Handle Catch
-      .catch((error) => {
-        console.log("See the error below");
-        setError("Failed to add song. Please try again.");
-        console.log(error);
-      });
+
+    dispatch(updateSongStart({ title, album, genre, artist, _id }));
   };
 
+  if (!selectedSong) {
+    return <div>No song selected</div>;
+  }
   return (
     <FormContainer>
       <h3>Update Song</h3>

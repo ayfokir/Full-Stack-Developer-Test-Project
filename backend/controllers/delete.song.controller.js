@@ -1,4 +1,4 @@
-const { deleteSong } = require('../services/song-service');
+const { deleteSong } = require('../services/delete.song.service');
 
 async function Delete(req, res, next) {
     try {

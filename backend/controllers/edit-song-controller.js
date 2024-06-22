@@ -3,10 +3,11 @@ const { editSong } = require('../services/edit-song.service');
 async function EditSong(req, res, next) {
     try {
         let song = req.body;
+        let  songId = req.params.id
         console.log("See the song before edit:");
         console.log(song);
         
-        const editedSong = await editSong(song, song._id);
+        const editedSong = await editSong(song, songId);
         console.log("See song after edit:");
         console.log(editedSong);
         

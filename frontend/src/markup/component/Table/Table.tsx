@@ -4,10 +4,13 @@ import AddSongForm from "../Main/AddSong";
 import formDataType from "../../../utils/FormType";
 import EditSong from "../Main/EditSong";
 import Delete from "../../../services/delete.song.service";
+import {  setSelectedSong } from "../../redux/slices/selectedSongSlice";
+import {  deleteSongStart, } from "../../redux/slices/Slice";
+import { useDispatch } from "react-redux";
+
 type TableProps = {
   data: Array<{ [key: string]: any }>;
   columns: Array<{ header: string; accessor: string }>;
-  onDeleteSong: (id: string) => void;
 };
 
 const StyledHeadingContainer = styled.div`
@@ -111,10 +114,11 @@ const CloseButton = styled.button`
   border-radius: 4px;
   cursor: pointer;
 `;
-const Table: React.FC<TableProps> = ({ data, columns, onDeleteSong }) => {
+const Table: React.FC<TableProps> = ({ data, columns }) => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isEditPopupOpen, setIsEditPopupOpen] = useState(false);
-  const [updateSongs, setUpdateSongs] = useState<Partial<formDataType>>({});
+  const dispatch = useDispatch(); // Get dispatch function from Redux
+
   const handleCreateSongsClick = () => {
     setIsPopupOpen(true);
   };
@@ -129,75 +133,18 @@ const Table: React.FC<TableProps> = ({ data, columns, onDeleteSong }) => {
   };
 
   const handleDelete = async (id: string) => {
-    // Implement the logic to delete a song
-    console.log(`Deleting song at index ${id}`);
     try {
-      console.log(`Deleting song at index ${id}`);
-      const response = await Delete(id);
-      console.log("See response", response);
-
-      // Update state to remove the deleted song
-      if (response && response.success) {
-        onDeleteSong(id); // Call the parent component's delete handler
-      } else {
-        console.log("Failed to delete song");
-      }
+      console.log(`Deleting song with id ${id}`);
+      dispatch(deleteSongStart(id));
     } catch (error) {
       console.log("Error deleting song", error);
     }
   };
-
-  const handleEdit = (row: Partial<formDataType>) => {
-    // Implement the logic to edit a song
-    console.log(`see the selected song pass to Edit Component`);
-    console.log(row);
-    setIsEditPopupOpen(() => true);
-    setUpdateSongs(() => row);
-    // setUpdateSongs(() => row)
-    // if (!row.title || !row.album || !row.genre || !row.artist) {
-    //   // setError('All fields are required');
-    //   return;
-    // }
-    // // setError('');
-    // // const newSong = { title, album, genre, artist };
-    // const formData = {title: row.title, album: row.album, genre:row.genre, artist:row.artist};
-    //      // Pass the form data to the service
-    // const res = Edit( formData );
-    // res
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //   console.log("see data")
-    //      console.log(data);
-    //     // If Error is returned from the API server, set the error message
-    //     if (data.error) {
-    //         // setError('Failed to add song. Please try again.');
-    //     } else {
-    //       console.log("Successfully updated")
-    //         // onAddSong();
-    //         // setTitle('');
-    //         // setAlbum('');
-    //         // setGenre('');
-    //         // setArtist('');
-    //     //   // Handle successful response
-    //     //   setSuccess(true);
-    //     //   setServerError("");
-    //     //   // Redirect to the employees page after 2 seconds
-    //     //   // For now, just redirect to the home page
-    //     //   setTimeout(() => {
-    //     //     // window.location.href = '/admin/employees';
-    //     //     window.location.href = "/";
-    //     //   }, 2000);
-    //     }
-    //   })
-    //   // Handle Catch
-    //   .catch( ( error ) =>
-    //   {
-    //     console.log( "See the error below" )
-    //     // setError('Failed to add song. Please try again.');
-    //     console.log(error)
-    //   });
+  const handleEdit = (row: any) => {
+    console.log(`Editing song with id ${row._id}`);
+    setIsEditPopupOpen(true);
+    dispatch(setSelectedSong(row)); // Dispatch selectSong action with the selected song
   };
-
   return (
     <TableContainer>
       <StyledHeadingContainer>
@@ -255,7 +202,6 @@ const Table: React.FC<TableProps> = ({ data, columns, onDeleteSong }) => {
               &#10005;
             </CloseButton>
             <EditSong
-              updateSong={updateSongs}
               onAddSong={() => setIsEditPopupOpen(false)}
             />
           </PopupContent>
