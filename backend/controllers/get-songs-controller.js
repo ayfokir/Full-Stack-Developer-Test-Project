@@ -1,4 +1,4 @@
-const { getSongs } = require('../services/song-service');
+const { getSongs } = require('../services/get-songs-service');
 
 async function getSong(req, res, next) {
     try {

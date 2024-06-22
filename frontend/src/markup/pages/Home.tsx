@@ -3,6 +3,9 @@ import Table from "../component/Table/Table";
 import getSongs from "../../services/get-songs.service";
 import { useEffect } from "react";
 import formDataType from "../../utils/FormType";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchSongsStart, deleteSongStart } from "../redux/slices/Slice";
+import {RootState} from "../redux/store/Store";
 // const data = [
 //     { title: "Bohemian Rhapsody", artist: "Queen", album: "A Night at the Opera", genre: "Rock" },
 //     { title: "Billie Jean", artist: "Michael Jackson", album: "Thriller", genre: "Pop" },
@@ -24,23 +27,25 @@ const columns = [
 ];
 
 const Home: React.FC = () => {
-  const [data, setData] = useState<formDataType[]>([]);
-
+  const dispatch = useDispatch(); // Get dispatch function from Redux
+  
   useEffect(() => {
-    const fetshSongs = async () => {
-      const songs = await getSongs();
-      setData(songs.songs);
-      console.log("see songs");
-      console.log(songs);
-    };
-    fetshSongs();
-  }, []);
-  const handleDeleteSong = async (id: string) => {
-    setData(data?.filter((song: formDataType) => song._id !== id));
-  };
+    // Dispatch fetchSongsStart action when the component mounts
+    dispatch(fetchSongsStart());
+  }, [dispatch]); // Make sure to include dispatch in the dependency array to avoid unnecessary re-renders
+  
+  const songs = useSelector((state: RootState) => state.songs.songs);
+  console.log("see the songs inside home page")
+  console.log(songs)
+  const loading = useSelector((state: RootState) => state.songs.loading);
+  const error = useSelector((state: RootState) => state.songs.error);
   return (
-    <div>
-      <Table data={data} columns={columns} onDeleteSong={handleDeleteSong} />
+<div>
+      {loading && <p>Loading...</p>} {/* Display loading message */}
+      {error && <p>Error: {error}</p>} {/* Display error message */}
+      {!loading && !error && (
+        <Table data={songs} columns={columns}/>
+      )}
     </div>
   );
 };
