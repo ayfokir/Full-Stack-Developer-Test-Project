@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
-import Create from "../../../services/create-song-service";
-import formDataType from "../../../utils/FormType";
-import Edit from "../../../services/edit-song-service";
-import getSongs from "../../../services/get-songs.service";
 import { updateSongStart } from "../../redux/slices/Slice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -14,11 +10,9 @@ const FormContainer = styled.div`
   border-radius: 8px;
   width: 400px;
 `;
-
 const FormGroup = styled.div`
   margin-bottom: 20px;
 `;
-
 const Label = styled.label`
   display: block;
   font-weight: bold;
@@ -45,14 +39,19 @@ const Button = styled.button`
 const EditSong: React.FC<{onAddSong: () => void;}> = ({ onAddSong }) => {
   const dispatch = useDispatch();
   const selectedSong = useSelector((state: RootState) => state.selectedSong.selectedSong);
-
+  console.log("see the selected song inside Edit component")
+  console.log(selectedSong)
+  // Get formError state from Redux store
+  const { loading, error } = useSelector((state: RootState) => state.songs);
+  console.log(loading)
+  console.log(error)
   const [title, setTitle] = useState("");
   const [album, setAlbum] = useState("");
   const [genre, setGenre] = useState("");
   const [artist, setArtist] = useState("");
   const [_id, setId]   = useState("");
-  const [error, setError] = useState("");
-
+  const [formError, setFormError] = useState("");
+  
   useEffect(() => {
     if (selectedSong) {
       setTitle(selectedSong.title);
@@ -62,26 +61,35 @@ const EditSong: React.FC<{onAddSong: () => void;}> = ({ onAddSong }) => {
       setId(selectedSong._id || "");
     }
   }, [selectedSong]);
-
+  
+  // useEffect(() => {
+  //   if (!loading && error) {
+  //     // If there is no formError and the loading is finished, close the popup and reset fields
+  //     setTitle("");
+  //     setAlbum("");
+  //     setGenre("");
+  //     setArtist("");
+  //     setId("");
+  //     onAddSong();
+  //   }
+  // }, [loading, error, onAddSong]);
+  
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!title || !album || !genre || !artist) {
-      setError('All fields are required');
+      setFormError('All fields are required');
       return;
     }
-
     dispatch(updateSongStart({ title, album, genre, artist, _id }));
   };
-
   if (!selectedSong) {
     return <div>No song selected</div>;
   }
   return (
     <FormContainer>
       <h3>Update Song</h3>
-      {error && (
-        <div style={{ color: "red", marginBottom: "10px" }}>{error}</div>
-      )}
+      {formError && (<div style={{ color: "red", marginBottom: "10px" }}>{formError}</div>)}
+      {error && <div style={{ color: 'red', marginBottom: '10px' }}>{error}</div>}
       <form onSubmit={handleSubmit}>
         <FormGroup>
           <Label>Title:</Label>

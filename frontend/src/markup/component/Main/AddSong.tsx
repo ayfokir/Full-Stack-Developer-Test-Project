@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import Create from '../../../services/create-song-service';
 import { useDispatch } from "react-redux";
 import { addSongStart } from "../../redux/slices/Slice";
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store/Store';
 
 const FormContainer = styled.div`
   background-color: #fff;
@@ -40,11 +41,27 @@ const Button = styled.button`
 `;
 const AddSongForm: React.FC<{  onAddSong: () => void }> = ({ onAddSong }) => {
   const dispatch = useDispatch(); // Get dispatch function from Redux
+  // Get error state from Redux store
+  const addSongFailurError = useSelector((state: RootState) => state.songs.error);
+
   const [title, setTitle] = useState('');
   const [album, setAlbum] = useState('');
   const [genre, setGenre] = useState('');
   const [artist, setArtist] = useState('');
   const [error, setError] = useState('');
+
+   // useEffect(() => {
+  //   if (!loading && error) {
+  //     // If there is no formError and the loading is finished, close the popup and reset fields
+  //     setTitle("");
+  //     setAlbum("");
+  //     setGenre("");
+  //     setArtist("");
+  //     setId("");
+  //     onAddSong();
+  //   }
+  // }, [loading, error, onAddSong]);
+
 
   const handleSubmit =  (e: React.FormEvent) => {
     // dispatch(fetchSongsStart());
@@ -59,16 +76,13 @@ const AddSongForm: React.FC<{  onAddSong: () => void }> = ({ onAddSong }) => {
   console.log("see response inside AddSong Component")
   console.log(response)
     // Clear the form fields
-    setTitle('');
-    setAlbum('');
-    setGenre('');
-    setArtist('');
   };
 
   return (
     <FormContainer>
       <h3>Add Song</h3>
       {error && <div style={{ color: 'red', marginBottom: '10px' }}>{error}</div>}
+      {addSongFailurError && <div style={{ color: 'red', marginBottom: '10px' }}>{addSongFailurError}</div>}
       <form onSubmit={handleSubmit}>
         <FormGroup>
           <Label>Title:</Label>

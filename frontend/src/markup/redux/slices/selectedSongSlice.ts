@@ -25,6 +25,8 @@ const selectedSongSlice = createSlice({
   initialState,
   reducers: {
     setSelectedSong(state, action: PayloadAction<Song>) {
+      console.log("see selected song ")
+      console.log(action)
       state.selectedSong = action.payload;
     },
     clearSelectedSong(state) {
