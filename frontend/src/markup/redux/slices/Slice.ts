@@ -38,6 +38,8 @@ const songSlice = createSlice({
             state.loading = false;
             state.error = action.payload;
         },
+
+
         addSongStart(state, action: PayloadAction<{ title: string; album: string; genre: string; artist: string }>) {
           state.loading = true;
           state.error = null;
@@ -50,6 +52,8 @@ const songSlice = createSlice({
             state.loading = false;
             state.error = action.payload;
         },
+
+
         updateSongStart(state, action: PayloadAction<{ title: string | undefined; album: string | undefined; genre: string | undefined; artist: string | undefined, _id: string | undefined }>) {
             state.loading = true;
             state.error = null;
@@ -65,6 +69,8 @@ const songSlice = createSlice({
             state.loading = false;
             state.error = action.payload;
         },
+
+        
         deleteSongStart(state, action: PayloadAction<string>) {
           state.loading = true;
           state.error = null;

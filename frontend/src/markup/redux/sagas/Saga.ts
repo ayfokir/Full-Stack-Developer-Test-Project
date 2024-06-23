@@ -18,12 +18,10 @@ interface ApiResponse {
         success: boolean;
         songs: Song[];
     }
-    
 }
-// Define API endpoints
-// const API_URL = 'http://your-api-url.com/songs';
 
 // Fetch Songs
+// Define API endpoints
 const API_URL: string | undefined= process.env.REACT_APP_API_URL ;
 function* fetchSongs(): Generator {
     try {

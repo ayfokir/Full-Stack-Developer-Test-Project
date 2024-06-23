@@ -40,7 +40,7 @@ const Home: React.FC = () => {
   const loading = useSelector((state: RootState) => state.songs.loading);
   const error = useSelector((state: RootState) => state.songs.error);
   return (
-<div>
+    <div >
       {loading && <p>Loading...</p>} {/* Display loading message */}
       {error && <p>Error: {error}</p>} {/* Display error message */}
       {!loading && !error && (

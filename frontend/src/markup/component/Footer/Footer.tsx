@@ -1,9 +1,22 @@
-import React from 'react'
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
+import React from 'react';
 
-const Footer = () => {
-  return (
-    <div>Footer</div>
-  )
-}
+const footerStyles = css`
+  background-color: #333;
+  color: #fff;
+  padding: 10px 20px;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  margin-top: 20px; /* Add margin top */
+`;
 
-export default Footer
+const Footer: React.FC = () => (
+  <div css={footerStyles}>
+    <p>&copy; 2024 My Music App. All rights reserved.</p>
+  </div>
+);
+
+export default Footer;
