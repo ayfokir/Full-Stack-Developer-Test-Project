@@ -7,7 +7,6 @@ const footerStyles = css`
   color: #fff;
   padding: 10px 20px;
   text-align: center;
-  position: fixed;
   bottom: 0;
   width: 100%;
   margin-top: 20px; /* Add margin top */

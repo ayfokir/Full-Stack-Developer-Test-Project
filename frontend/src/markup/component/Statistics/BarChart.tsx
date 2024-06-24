@@ -20,7 +20,7 @@ const containerStyles = css`
 `;
 
 const headerStyles = css`
- font-family: "Arial", sans-serif;
+  font-family: "Arial", sans-serif;
   font-size: 24px;
   font-weight: 500;
   color: #333;
@@ -69,11 +69,11 @@ export const BarChart: React.FC = () => {
 
   return (
     <div css={containerStyles}>
-      <h3 css={headerStyles}>Monthly Overviews</h3>
+      <h3 css={headerStyles}>Number of Songs per Genre</h3>
       <hr css={hrStyles} />
       <div css={chartContainerStyles}>
         <div css={chartWrapperStyles}>
-          <Bar data={data}  />
+          <Bar data={data} height={183} />
         </div>
       </div>
     </div>

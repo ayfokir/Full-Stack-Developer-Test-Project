@@ -20,13 +20,14 @@ const StyledHeading = styled.h3`
 `;
 
 const StyledTableContainer = styled.div`
-  width: 90%; /* Ensures it takes the full width of the parent container */
+  width: calc(100% - 140px); /* Adjusted width */
   overflow-x: auto;
   padding-right: 70px;
   padding-left: 70px;
   margin: auto;
   flex: 1; /* Ensures it takes the full height of the parent container */
 `;
+
 
 const StyledTable = styled.table`
   width: 100%;
@@ -50,7 +51,7 @@ const StatisticsTable: React.FC<TableProps> = ({ data, columns }) => {
   return (
     <StyledTableContainer>
       <StyledHeadingContainer>
-        <StyledHeading>Songs Table</StyledHeading>
+        <StyledHeading>Albums and Songs Count Per Artist</StyledHeading>
       </StyledHeadingContainer>
       <StyledTable>
         <thead>

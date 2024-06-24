@@ -17,13 +17,21 @@ const StyledHeading = styled.h3`
   font-size: 24px;
   font-weight: 500;
   color: #333;
+  margin-bottom: 70px;
 `;
 
 const StyledTableContainer = styled.div`
   width: 100%; /* Ensures it takes the full width of the parent container */
   overflow-x: auto;
-   padding-right: 80px;
+  padding-right: 80px;
   flex: 1; /* Ensures it takes the full height of the parent container */
+  max-height: 539px; /* Adjust the maximum height as needed */
+  overflow-y: auto; /* Add scrollbar when content exceeds max-height */
+
+  @media (max-width: 1280px) {
+    padding-right: 70px;
+    padding-left: 70px;
+  }
 `;
 
 const StyledTable = styled.table`
@@ -48,7 +56,7 @@ const StatisticsTable: React.FC<TableProps> = ({ data, columns }) => {
   return (
     <StyledTableContainer>
       <StyledHeadingContainer>
-        <StyledHeading>Songs Table</StyledHeading>
+        <StyledHeading>Number of songs per Album</StyledHeading>
       </StyledHeadingContainer>
       <StyledTable>
         <thead>
