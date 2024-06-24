@@ -20,7 +20,7 @@ function App() {
         <Route path="/statistics" element={<Statistics />} />
       </Routes>
       </Router>
-    {/* <Footer  /> */}
+    <Footer  />
     </Provider>
 
     </div>

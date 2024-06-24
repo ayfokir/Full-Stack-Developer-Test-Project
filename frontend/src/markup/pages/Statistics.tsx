@@ -5,17 +5,17 @@ import styled from '@emotion/styled';
 import Card from '../component/Statistics/Card';
 import { BarChart } from '../component/Statistics/BarChart';
 import StatisticsTable1 from '../component/Statistics/StatisticsTable1';
-import StatisticsTable2 from '../component/Statistics/StatisticsTable1';
+import StatisticsTable2 from '../component/Statistics/StatisticsTable2';
 import { RootState } from '../redux/store/Store';
 
 const columns1 = [
   { header: "Artist", accessor: "artist" },
-  { header: "No. Albums", accessor: "album" },
-  { header: "No. Songs", accessor: "song" },
+  { header: "Number of Albums ", accessor: "album" },
+  { header: "Number of Songs", accessor: "song" },
 ];
 const columns2 = [
   { header: " Albums", accessor: "album" },
-  { header: "No. Songs", accessor: "song" },
+  { header: "Number of Songs", accessor: "song" },
 ];
 
 const Statistics: React.FC = () => {
@@ -80,6 +80,10 @@ const Container = styled.div`
 
 const Title = styled.h1`
   padding-left: 20px;
+  padding-bottom: 20px;
+  font-weight: 600; /* Medium font weight */
+  margin: 0
+
 `;
 
 const CardContainer = styled.div`

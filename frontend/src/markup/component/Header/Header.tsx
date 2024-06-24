@@ -8,30 +8,45 @@ const headerStyles = css`
   color: #fff;
   padding: 10px 20px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* Space around the content */
   align-items: center;
+  position: sticky; /* Make the header sticky */
+  top: 0; /* Stick to the top of the viewport */
+`;
+
+const titleStyles = css`
+  margin: 0;
+  text-decoration: none; /* Remove underline when used as a link */
+  color: #fff;
+  font-weight: 400; /* Medium font weight */
+  font-size: 24px; /* Default font size */
+  
+  @media (max-width: 768px) {
+    font-size: 20px; /* Font size for tablets and small desktops */
+  }
+
+  @media (max-width: 480px) {
+    font-size: 16px; /* Font size for mobile devices */
+  }
 `;
 
 const buttonStyles = css`
   background-color: #555;
   color: #fff;
   border: none;
-  padding: 8px 16px;
+  padding: 12px 35px;
   border-radius: 4px;
   cursor: pointer;
   text-decoration: none; /* Remove underline when used as a link */
-  margin-left: 10px; /* Add margin for spacing */
 `;
 
 const Header: React.FC = () => {
   return (
     <div css={headerStyles}>
-      <h1>My Music App</h1>
-      <div>
-        <Link to="/statistics" css={buttonStyles}>Statistics</Link>
-        {/* Add additional buttons or links here */}
-        <Link to="/profile" css={buttonStyles}>Profile</Link>
-      </div>
+      <Link to = "/" css={titleStyles}>
+        <h1 css={titleStyles}>My Music App</h1>
+      </Link>
+      <Link to="/statistics" css={buttonStyles}>Statistics</Link>
     </div>
   );
 };
