@@ -91,6 +91,8 @@ const CardContainer = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   gap: 20px;
+ 
+
 `;
 
 const FlexContainer = styled.div`
