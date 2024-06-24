@@ -10,6 +10,7 @@ const StyledHeadingContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: -24px
 `;
 
 const StyledHeading = styled.h3`
@@ -23,14 +24,14 @@ const StyledHeading = styled.h3`
 const StyledTableContainer = styled.div`
   width: 100%; /* Ensures it takes the full width of the parent container */
   overflow-x: auto;
-  padding-right: 80px;
+  padding-right: 50px;
   flex: 1; /* Ensures it takes the full height of the parent container */
   max-height: 539px; /* Adjust the maximum height as needed */
   overflow-y: auto; /* Add scrollbar when content exceeds max-height */
 
   @media (max-width: 1280px) {
-    padding-right: 70px;
-    padding-left: 70px;
+    padding-right: 50px;
+    padding-left: 50px;
   }
 `;
 

@@ -12,7 +12,7 @@ const containerStyles = css`
   flex-direction: column;
   background-color: #fff;
   padding-bottom: 40px;
-  padding-left: 80px;
+  padding-left: 60px;
 
   flex: 1; /* Ensures it takes the full height of the parent container */
   justify-content: center; /* Center the content vertically */
@@ -25,6 +25,7 @@ const headerStyles = css`
   font-weight: 500;
   color: #333;
   margin-left: 20px; /* Add left margin */
+  margin-bottom: 0
 `;
 
 const hrStyles = css`
@@ -73,7 +74,7 @@ export const BarChart: React.FC = () => {
       <hr css={hrStyles} />
       <div css={chartContainerStyles}>
         <div css={chartWrapperStyles}>
-          <Bar data={data} height={183} />
+          <Bar data={data} height={176} />
         </div>
       </div>
     </div>
